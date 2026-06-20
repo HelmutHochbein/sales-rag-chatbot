@@ -1,0 +1,45 @@
+{
+    "name": "acmeco-chatbot-sales",
+    "version": "1.0.0",
+    "type": "module",
+    "msteams": {
+        "teamsAppId": null
+    },
+    "description": "AcmeCo Sales Bot – Microsoft Teams Bot",
+    "engines": {
+        "node": "20 || 22"
+    },
+    "author": "AcmeCo GmbH",
+    "license": "MIT",
+    "main": "./src/index.js",
+    "scripts": {
+        "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run dev",
+        "dev:teamsfx:testtool": "env-cmd --silent -f .localConfigs.playground npm run dev",
+        "dev:teamsfx:launch-testtool": "env-cmd --silent -f env/.env.playground teamsapptester start",
+        "dev": "nodemon --inspect=9239 --signal SIGINT ./src/index.js",
+        "start": "node ./src/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "nodemon --exec \"npm run start\"",
+        "questions:tail": "env-cmd --silent -f env/.env.dev node ./scripts/export-questions.js --format pretty",
+        "questions:export": "env-cmd --silent -f env/.env.dev node ./scripts/export-questions.js --format csv"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-username/teams-sales-bot"
+    },
+    "dependencies": {
+        "@anthropic-ai/sdk": "^0.35.0",
+        "@azure/data-tables": "^13.3.2",
+        "@azure/identity": "^4.13.1",
+        "@notionhq/client": "^5.20.0",
+        "botbuilder": "^4.23.3",
+        "dotenv": "^17.2.3",
+        "express": "^5.1.0",
+        "marked": "^18.0.4",
+        "notion-to-md": "^3.1.9"
+    },
+    "devDependencies": {
+        "env-cmd": "^10.1.0",
+        "nodemon": "^3.1.7"
+    }
+}

@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://aka.ms/m365-agents-toolkits/v1.9/yaml.schema.json
+version: v1.9
+
+provision:
+  - uses: teamsApp/create
+    with:
+      name: AcmeCo Sales Bot${{APP_NAME_SUFFIX}}
+    writeToEnvironmentFile:
+      teamsAppId: TEAMS_APP_ID
+
+  - uses: aadApp/create
+    with:
+      name: AcmeCo Sales Bot${{APP_NAME_SUFFIX}}
+      generateClientSecret: true
+      signInAudience: AzureADMultipleOrgs
+    writeToEnvironmentFile:
+      clientId: BOT_ID
+      clientSecret: SECRET_BOT_PASSWORD
+      objectId: BOT_OBJECT_ID
+
+  - uses: botFramework/create
+    with:
+      botId: ${{BOT_ID}}
+      name: AcmeCo Sales Bot
+      messagingEndpoint: ${{BOT_ENDPOINT}}/api/messages
+      description: ""
+      channels:
+        - name: msteams
+
+  - uses: teamsApp/validateManifest
+    with:
+      manifestPath: ./appPackage/manifest.json
+  - uses: teamsApp/zipAppPackage
+    with:
+      manifestPath: ./appPackage/manifest.json
+      outputZipPath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      outputFolder: ./appPackage/build
+  - uses: teamsApp/validateAppPackage
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+  - uses: teamsApp/update
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+
+deploy:
+  - uses: cli/runNpmCommand
+    name: install dependencies
+    with:
+      args: install --no-audit
+  - uses: file/createOrUpdateEnvironmentFile
+    with:
+      target: ./.localConfigs
+      envs:
+        CLIENT_ID: ${{BOT_ID}}
+        CLIENT_SECRET: ${{SECRET_BOT_PASSWORD}}
+        BOT_TYPE: 'MultiTenant'
+        ANTHROPIC_API_KEY: ${{SECRET_ANTHROPIC_API_KEY}}

@@ -1,0 +1,16 @@
+{
+  "model": "claude-haiku-4-5-20251001",
+  "max_tokens": 1500,
+  "tools": [
+    {
+      "type": "web_search",
+      "allowed_domains": ["www.manufacturer-docs.example.com", "www.example-company.de"],
+      "max_uses": 5,
+      "user_location": {
+        "type": "approximate",
+        "country": "DE",
+        "timezone": "Europe/Berlin"
+      }
+    }
+  ]
+}

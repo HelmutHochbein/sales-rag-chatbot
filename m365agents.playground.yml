@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://aka.ms/m365-agents-toolkits/v1.9/yaml.schema.json
+version: v1.9
+
+deploy:
+  - uses: devTool/install
+    with:
+      testTool:
+        version: ~0.2.1
+        symlinkDir: ./devTools/teamsapptester
+  - uses: cli/runNpmCommand
+    with:
+      args: install --no-audit
+  - uses: file/createOrUpdateEnvironmentFile
+    with:
+      target: ./.localConfigs.playground
+      envs:
+        ANTHROPIC_API_KEY: ${{SECRET_ANTHROPIC_API_KEY}}
+        TEAMSFX_NOTIFICATION_STORE_FILENAME: ${{TEAMSFX_NOTIFICATION_STORE_FILENAME}}

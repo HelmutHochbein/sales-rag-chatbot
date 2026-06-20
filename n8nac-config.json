@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "activeInstanceId": "instance-example",
+  "instances": [
+    {
+      "id": "instance-example",
+      "name": "n8n · AcmeCo",
+      "host": "https://your-n8n.example.com",
+      "syncFolder": "n8n/workflows",
+      "projectId": "personal",
+      "projectName": "Personal",
+      "instanceIdentifier": "n8n_example_com_acmeco",
+      "workflowDir": "n8n/workflows/n8n_example_com_acmeco/personal"
+    }
+  ],
+  "host": "https://your-n8n.example.com",
+  "syncFolder": "n8n/workflows",
+  "projectId": "personal",
+  "projectName": "Personal",
+  "instanceIdentifier": "n8n_example_com_acmeco",
+  "workflowDir": "n8n/workflows/n8n_example_com_acmeco/personal"
+}
